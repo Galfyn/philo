@@ -14,9 +14,9 @@
 
 int main(int argc, char **argv)
 {
-	t_philo struct_philo;
-
+	t_general	struct_philo;
 	if (check_argv(argc, argv) == 0)
 		return (error("Arguments specified incorrectly"));
-	handler(argc, argv, &struct_philo);
+	if (handler(argc, argv, &struct_philo) == 0)
+		return (error("Error"));
 }
