@@ -6,7 +6,7 @@
 /*   By: galfyn <galfyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/22 14:46:03 by galfyn            #+#    #+#             */
-/*   Updated: 2021/11/04 14:22:51 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/10 19:07:53 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 
 int	ft_atoi(const char *str)
 {
-	int	negative;
-	int	result;
+	int		negative;
+	int		result;
+	long 	max_int;
+	int		i;
 
 	negative = 1;
 	result = 0;
-	while (*str && ft_isspace(*str) == 1)
-		++str;
-	if (*str == '-')
+	i = 0;
+	while (str[i] && ft_isspace(str[i]) == 1)
+		++i;
+	if (str[i] == '-')
 		negative = -1;
-	if (*str == '-' || *str == '+')
-		++str;
-	while (*str && *str >= '0' && *str <= '9')
+	if (str[i] == '-' || str[i] == '+')
+		++i;
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (*str - '0');
-		++str;
+		result = result * 10 + (str[i] - '0');
+		max_int = max_int * 10 + (str[i] - '0');
+		++i;
 	}
+	if (max_int > 2147483647 || max_int < -2147483648)
+		return (-1);
 	return (result * negative);
 }
