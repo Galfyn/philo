@@ -7,31 +7,27 @@ SRC			=	philo.c		\
 				init.c		\
 				get_time.c	\
 				ft_usleep.c	\
-
+				utils.c	\
 
 
 OBJ			=	$(patsubst %.c,%.o,$(SRC))
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-all			:	libft $(NAME)
+all			:	$(NAME)
 
 $(NAME)		:	$(OBJ)
-				gcc -Llibft -lft $(OBJ) -o $@
+				gcc $(OBJ) -o $@
 
 %.o 		: %.c philo.h
-				gcc  -I./Libft -c $< -o $@
-
-libft		:
-				make -C Libft/
+				gcc -c $< -o $@
 
 clean		:
 				rm -f $(OBJ)
-				make clean -C Libft/
 
 fclean		:	clean
 				rm -f $(NAME)
 
 re			:	fclean all
 
-.PHONY		:	all clean fclean re libft
+.PHONY		:	all clean fclean re

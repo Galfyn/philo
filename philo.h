@@ -6,15 +6,15 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 09:43:58 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/11 12:08:44 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/11 12:26:09 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
-# include "Libft/libft.h"
 # include <pthread.h>
 # include <sys/time.h>
 
@@ -44,6 +44,9 @@ typedef struct s_param
 	t_philo			*philo;
 }					t_param;
 
+int		ft_atoi(const char *str);
+int		ft_isdigit(int c);
+int		ft_isspace(int c);
 int		check_argv(int argc, char **argv);
 int		error(char *str);
 long	get_time(void);

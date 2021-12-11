@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: galfyn <galfyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/22 14:46:03 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/11 11:07:19 by galfyn           ###   ########.fr       */
+/*   Created: 2021/12/11 12:28:57 by galfyn            #+#    #+#             */
+/*   Updated: 2021/12/11 12:29:59 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
 int	ft_atoi(const char *str)
 {
 	int		negative;
 	int		result;
-	long 	max_int;
+	long	max_int;
 	int		i;
 
 	negative = 1;
@@ -38,4 +38,21 @@ int	ft_atoi(const char *str)
 	if (max_int > 2147483647)
 		return (-1);
 	return (result * negative);
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
+}
+
+int	ft_isspace(int c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r')
+		return (1);
+	else
+		return (0);
 }
