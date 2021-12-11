@@ -6,15 +6,15 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 09:43:12 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/10 18:31:25 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/11 12:19:19 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *check_death(void *parametr)
+void	*check_death(void *parametr)
 {
-	int 	i;
+	int		i;
 	t_param	*param;
 
 	param = (t_param *)parametr;
@@ -25,24 +25,23 @@ void *check_death(void *parametr)
 		{
 			if (get_time() > param->philo[i].last_eat + param->die)
 			{
-				print_status("is DEAD", i, param, 0);
+				print_status("died", i, param, 0);
 				param->death = 1;
-				return (void*)(1);
+				return ((void *)1);
 			}
-			if (param->nb_meals != -1 && param->nb_eat / param->nb_philo >=
-			param->nb_meals)
+			if (param->nb_meals != -1
+				&& param->nb_eat / param->nb_philo >= param->nb_meals)
 			{
 				printf("The philosophers finished their meal\n");
-				return (void*)(1);
+				return ((void *)1);
 			}
 			i++;
 		}
-
 	}
 	return (NULL);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	int			i;
 	t_param		param;
@@ -58,10 +57,4 @@ int main(int argc, char **argv)
 	pthread_create(&tid_death, NULL, check_death, &param);
 	pthread_join(tid_death, NULL);
 	pthread_detach(tid_death);
-	while (i < param.nb_philo)
-	{
-		pthread_detach(param.philo[i].tid);
-		free(&param.philo[i]);
-		i++;
-	}
 }

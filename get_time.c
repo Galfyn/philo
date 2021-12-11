@@ -6,15 +6,15 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:05:09 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/10 16:05:08 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/11 12:01:39 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
-long int get_time(void)
+long	get_time(void)
 {
-	long int		time;
+	long			time;
 	struct timeval	time_now;
 
 	gettimeofday(&time_now, NULL);

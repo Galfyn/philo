@@ -6,18 +6,18 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:18:56 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/10 17:09:47 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/11 12:04:45 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
-int init_philo(t_param *param)
+int	init_philo(t_param *param)
 {
 	int	i;
 
 	i = 0;
-	param->philo = (t_philo*) malloc(sizeof(t_philo) * param->nb_philo);
+	param->philo = (t_philo *)malloc(sizeof(t_philo) * param->nb_philo);
 	if (!param->philo)
 		return (error("Error allocated memory"));
 	while (i < param->nb_philo)
@@ -37,14 +37,12 @@ int init_philo(t_param *param)
 	return (1);
 }
 
-
 int	init(int argc, char **argv, t_param *param)
 {
 	if (pthread_mutex_init(&param->write_m, NULL) != 0)
 		return (0);
 	if (pthread_mutex_init(&param->eating, NULL) != 0)
 		return (0);
-
 	param->nb_philo = ft_atoi(argv[1]);
 	param->die = ft_atoi(argv[2]);
 	param->eat = ft_atoi(argv[3]);
