@@ -14,9 +14,18 @@
 
 static void init_philo(t_param *param)
 {
+	int i;
+
+	i = 0;
 	param->ph = (t_philo *) malloc(sizeof(t_philo) * param->nb_philo);
 	if (!param->ph)
 		error("Allocated memory");
+	while (i < param->nb_philo)
+	{
+		param->ph[i].index = i + 1;
+		param->ph[i].last_eat = get_time();
+		i++;
+	}
 
 }
 

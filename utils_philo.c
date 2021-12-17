@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_argv.c                                       :+:      :+:    :+:   */
+/*   utils_philo.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/16 19:12:29 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/11 12:17:57 by galfyn           ###   ########.fr       */
+/*   Created: 2021/12/17 11:30:04 by galfyn            #+#    #+#             */
+/*   Updated: 2021/12/17 20:09:15 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,30 @@ int	check_argv(int argc, char **argv)
 	if (number_philo == 0 || number_philo > 200)
 		return (error("philosophers can be from 1 to 200"));
 	return (1);
+}
+
+int	error(char *str)
+{
+	if (str)
+		printf("Error: %s\n", str);
+	return (0);
+}
+
+long	get_time(long time_star)
+{
+	long			time;
+	struct timeval	time_now;
+
+	gettimeofday(&time_now, NULL);
+	time = (time_now.tv_sec * 1000) + (time_now.tv_usec / 1000) - time_star;
+	return (time);
+}
+
+void	ft_usleep(int time_ms)
+{
+	long	stop;
+
+	stop = get_time(time_ms) + time_ms;
+	while (get_time(time_ms) < stop)
+		usleep(200);
 }

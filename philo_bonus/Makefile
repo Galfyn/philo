@@ -6,7 +6,7 @@
 #    By: galfyn <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/11 14:58:37 by galfyn            #+#    #+#              #
-#    Updated: 2021/12/11 14:58:38 by galfyn           ###   ########.fr        #
+#    Updated: 2021/12/14 15:30:35 by galfyn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ SRCS		=	check_argv.c	\
 				philo_bonus.c	\
 				utils.c			\
 
-OBJS		=	$(patsubst(%.c,%.c,$(SRCS)))
+OBJS		=	$(patsubst %.c,%.o,$(SRCS))
 
 CFLAGS		=	-Wall -Wextra -Werror
 
 all			:	$(NAME)
 
 $(NAME)		:	$(OBJS)
-				gcc $(CFLAGS) $(OBJS) -o $@
+				gcc $(OBJS) -o $@
 
 %.o			:	%.c philo_bonus.h
 				gcc -c $< -o $@

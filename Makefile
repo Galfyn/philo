@@ -1,20 +1,17 @@
 NAME		=	philo
 
-SRC			=	philo.c		\
-				check_argv.c\
-				error.c		\
-				handler.c	\
-				init.c		\
-				get_time.c	\
-				ft_usleep.c	\
-				utils.c	\
+SRC			=	philo.c			\
+				init.c			\
+				utils_lib.c		\
+				utils_philo.c	\
+				threade.c		\
 
 
 OBJ			=	$(patsubst %.c,%.o,$(SRC))
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-all			:	$(NAME)
+all			:	$(NAME) clean
 
 $(NAME)		:	$(OBJ)
 				gcc $(OBJ) -o $@

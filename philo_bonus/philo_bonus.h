@@ -20,6 +20,7 @@
 # include <semaphore.h>
 
 typedef struct s_philo{
+	int		index;
 	long	last_eat;
 	struct s_param *pr;
 }t_philo;
