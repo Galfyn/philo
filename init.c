@@ -6,13 +6,13 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 10:18:56 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/17 19:47:26 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/24 08:57:37 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	init_philo(t_param *param)
+static int	init_philo(t_param *param)
 {
 	int	i;
 
@@ -23,6 +23,7 @@ int	init_philo(t_param *param)
 		param->philo[i].index = i + 1;
 		param->philo[i].r_f = NULL;
 		param->philo[i].param = param;
+		param->philo[i].count_eat = 0;
 		if (pthread_mutex_init(&param->philo[i].l_f, NULL) != 0)
 			return (0);
 		if (i == param->nb_philo - 1)

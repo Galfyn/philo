@@ -6,42 +6,52 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 09:43:12 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/17 19:56:32 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/24 08:56:25 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*check_death(void *parametr)
+static int	count_meals(t_param *prm, t_philo philo, int *eating)
+{
+	if (prm->nb_meals > 0 && philo.count_eat == prm->nb_meals)
+		++*eating;
+	if (*eating == prm->nb_meals)
+	{
+		pthread_mutex_lock(&prm->write_m);
+		printf("The philosophers finished their meal\n");
+		return (1);
+	}
+	return (0);
+}
+
+static void	*check_death(void *parametr)
 {
 	int		i;
+	int		eating;
 	t_param	*prm;
 
+	eating = 0;
 	prm = (t_param *)parametr;
 	while (1)
 	{
-		i = 0;
+		i = -1;
 		usleep(10);
-		while (i < prm->nb_philo)
+		while (++i < prm->nb_philo)
 		{
 			if (get_time(prm->time_start) > prm->philo[i].last_eat + prm->die)
 			{
 				pthread_mutex_lock(&prm->write_m);
-				printf("%ld %d is die \n", get_time(prm->time_start), i + 1);
+				printf("%ld %d died", get_time(prm->time_start), i + 1);
 				return ((void *)1);
 			}
-			if (prm->nb_meals == 0)
-			{
-				pthread_mutex_lock(&prm->write_m);
-				printf("The philosophers finished their meal\n");
-				return ((void *)1);
-			}
-			i++;
+			if (count_meals(prm, prm->philo[i], &eating) == 1)
+				return ((void *)2);
 		}
 	}
 }
 
-void	create_pthread(t_param *prm)
+static void	create_pthread(t_param *prm)
 {
 	int			i;
 	pthread_t	*tid;
@@ -52,7 +62,7 @@ void	create_pthread(t_param *prm)
 		error("Error: Alocated memory");
 	while (i < prm->nb_philo)
 	{
-		pthread_create(&tid[i], NULL, threade, &prm->philo[i]);
+		pthread_create(&tid[i], NULL, thread, &prm->philo[i]);
 		pthread_detach(tid[i]);
 		i++;
 	}

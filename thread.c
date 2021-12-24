@@ -6,21 +6,29 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 11:34:45 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/17 19:50:24 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/24 04:50:04 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+static void	print_status(long time, int index, char *str, int len)
+{
+	ft_putnbr(get_time(time));
+	write(1, " ", 1);
+	ft_putnbr(index);
+	write(1, str, len);
+}
+
 static void	take_fork(t_param *prm, t_philo *ph)
 {
 	pthread_mutex_lock(&ph->l_f);
 	pthread_mutex_lock(&prm->write_m);
-	printf("%ld %d has taken a fork_l\n", get_time(prm->time_start), ph->index);
+	print_status(prm->time_start, ph->index, " has taken a fork\n", 18);
 	pthread_mutex_unlock(&prm->write_m);
 	pthread_mutex_lock(ph->r_f);
 	pthread_mutex_lock(&prm->write_m);
-	printf("%ld %d has taken a fork\n", get_time(prm->time_start), ph->index);
+	print_status(prm->time_start, ph->index, " has taken a fork\n", 18);
 	pthread_mutex_unlock(&prm->write_m);
 }
 
@@ -28,9 +36,9 @@ static void	eat(t_param *prm, t_philo *ph)
 {
 	ph->last_eat = get_time(prm->time_start);
 	if (prm->nb_meals > 0)
-		prm->nb_meals--;
+		prm->philo->count_eat++;
 	pthread_mutex_lock(&prm->write_m);
-	printf("%ld %d is eating\n", get_time(prm->time_start), ph->index);
+	print_status(prm->time_start, ph->index, " is eating\n", 11);
 	pthread_mutex_unlock(&prm->write_m);
 	ft_usleep(prm->eat);
 	pthread_mutex_unlock(&ph->l_f);
@@ -40,15 +48,15 @@ static void	eat(t_param *prm, t_philo *ph)
 static void	sleep_think(t_param *prm, t_philo *ph)
 {
 	pthread_mutex_lock(&prm->write_m);
-	printf("%ld %d is sleeping\n", get_time(prm->time_start), ph->index);
+	print_status(prm->time_start, ph->index, " is sleeping\n", 13);
 	pthread_mutex_unlock(&prm->write_m);
 	ft_usleep(prm->sleep);
 	pthread_mutex_lock(&prm->write_m);
-	printf("%ld %d is thinking\n", get_time(prm->time_start), ph->index);
+	print_status(prm->time_start, ph->index, " is thinking\n", 13);
 	pthread_mutex_unlock(&prm->write_m);
 }
 
-void	*threade(void *philosopher)
+void	*thread(void *philosopher)
 {
 	t_philo	*ph;
 	t_param	*param;
@@ -64,5 +72,8 @@ void	*threade(void *philosopher)
 		take_fork(param, ph);
 		eat(param, ph);
 		sleep_think(param, ph);
+		if (param->philo->count_eat == param->nb_meals)
+			break ;
 	}
+	return (NULL);
 }

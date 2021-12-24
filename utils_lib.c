@@ -6,7 +6,7 @@
 /*   By: galfyn <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 12:28:57 by galfyn            #+#    #+#             */
-/*   Updated: 2021/12/11 12:29:59 by galfyn           ###   ########.fr       */
+/*   Updated: 2021/12/20 14:29:23 by galfyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,28 @@ int	ft_isspace(int c)
 		return (1);
 	else
 		return (0);
+}
+
+void	ft_putnbr(long n)
+{
+	long	nb;
+	long	nbr;
+
+	nb = n;
+	if (nb < 0)
+	{
+		write(1, "-", 1);
+		nb = -nb;
+	}
+	if (nb >= 10)
+	{
+		ft_putnbr(nb / 10);
+		nbr = nb % 10 + '0';
+		write(1, &nbr, 1);
+	}
+	else
+	{
+		nbr = nb + '0';
+		write(1, &nbr, 1);
+	}
 }
